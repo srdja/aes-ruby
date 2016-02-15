@@ -10,12 +10,12 @@ class AES_ECB
   end
 
 
-  def encrypt(msg, key, padding)
+  def encrypt(msg, key, add_padding)
     b_size = @cipher.block_size
     block_offset = msg.length % b_size
 
     # Add padding
-    if padding
+    if add_padding
       padding = (block_offset == 0) ? 15 : (block_offset - 1)
 
       msg.push(0x80)
@@ -39,7 +39,7 @@ class AES_ECB
   end
 
 
-  def decrypt(msg, key, padded)
+  def decrypt(msg, key, is_padded)
     b_size = @cipher.block_size
 
     if msg.length % b_size != 0
@@ -55,7 +55,7 @@ class AES_ECB
     end
 
     # Remove padding if the message was padded
-    if padded
+    if is_padded
       p_len = 0
       (msg.length - 1).step(0, -1) do |b|
         byte = msg[i]
