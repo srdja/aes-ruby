@@ -118,6 +118,15 @@ end
 
 class AESCipher
 
+
+  attr_accessor :block_size
+
+
+  def initialize()
+    @block_size = 16
+  end
+
+
   # Substitute byte
   def sub_bytes(state, nc)
     (0..3).each do |r|
