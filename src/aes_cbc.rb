@@ -56,7 +56,44 @@ class AES_CBC
 
 
   def decrypt(msg, key, iv, is_padded)
+    b_size = @cipher.block_size
 
+    if msg.length % b_size != 0
+      raise ArgumentError.new("Message size is not a multiple of the block size")
+    end
+
+    blocks = msg.length / b_size
+    plain_text = []
+
+    cipher_text_block = msg[(0..(b_size - 1))]
+    transition_block = @cipher.decrypt_block(cipher_text_block, key)
+    plain_text_block = xor_buffer(iv, transition_block)
+    plain_text.push(*plain_text_block)
+
+    (1..(blocks - 1)).each do |b|
+      block = msg[(b_size * b)..(b_size * (b + 1) - 1)]
+      transition_block = @cipher.decrypt_block(block, key)
+      plain_text_block = xor_buffer(cipher_text_block, transition_block)
+      cipher_text_block = block
+      plain_text.push(*plain_text_block)
+    end
+
+    # Remove padding if the message was padded
+    if is_padded
+      p_len = 0
+      (msg.length - 1).step(0, -1) do |b|
+        byte = msg[i]
+        p_len += 1
+        if byte == 0x80
+          break
+        elsif byte != 0x00
+          raise ArgumentError.new("No padding found")
+        end
+      end
+      x.pop(p_len)
+    end
+
+    plain_text
   end
 
 end
