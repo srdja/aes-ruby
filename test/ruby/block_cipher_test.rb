@@ -1,11 +1,6 @@
-#!/bin/env ruby
+require 'test_helper'
 
-
-require_relative "../src/aes.rb"
-require "test/unit"
-
-
-class CipherTest < Test::Unit::TestCase
+class AESCipherTest < Minitest::Test
 
   def test_cipher_init()
     key_bytes = [0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,

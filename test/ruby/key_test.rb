@@ -1,17 +1,13 @@
-#!/bin/env ruby
 
-require_relative "../src/aes.rb"
-require "test/unit"
+require 'test_helper'
 
-class KeyTest < Test::Unit::TestCase
+require_relative '../../lib/ruby/aes.rb'
 
+class KeyTest < Minitest::Test
 
   def test_invalid_key_size()
-    assert_raise(ArgumentError) {AESKey.new([*1..10])}
-    assert_raise(ArgumentError) {AESKey.new([*1..33])}
-    assert_nothing_raised(ArgumentError) {AESKey.new([*1..16])}
-    assert_nothing_raised(ArgumentError) {AESKey.new([*1..24])}
-    assert_nothing_raised(ArgumentError) {AESKey.new([*1..32])}
+    assert_raises(ArgumentError) {AESKey.new([*1..10])}
+    assert_raises(ArgumentError) {AESKey.new([*1..33])}
   end
 
 

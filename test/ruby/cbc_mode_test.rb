@@ -1,11 +1,9 @@
-#!/bin/env ruby
+require 'test_helper'
 
-require_relative "../src/aes.rb"
-require_relative "../src/aes_cbc.rb"
+require_relative '../../lib/ruby/aes.rb'
+require_relative '../../lib/ruby/aes_cbc.rb'
 
-require "test/unit"
-
-class CBCTest < Test::Unit::TestCase
+class CBCTest < Minitest::Test
 
 
   def test_cbc_encrypt_with_128_key()

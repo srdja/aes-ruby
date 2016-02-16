@@ -1,12 +1,9 @@
-#!/bin/env ruby
 
-require_relative "../src/aes.rb"
-require_relative "../src/aes_ecb.rb"
+require 'test_helper'
+require_relative '../../lib/ruby/aes.rb'
+require_relative '../../lib/ruby/aes_ecb.rb'
 
-require "test/unit"
-
-
-class ECBTest < Test::Unit::TestCase
+class ECBTest < Minitest::Test
 
 
   def test_ecb_encrypt_with_128_key()
